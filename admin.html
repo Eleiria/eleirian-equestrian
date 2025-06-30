@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+     <html lang="en">
+     <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Admin - Manage Horses</title>
+       <script src="https://cdn.tailwindcss.com"></script>
+       <style>
+         body {
+           background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b24cb081-f29c-4e75-9f36-ac033e88b0c7/dk25b56-e46be2d6-7a76-4a07-bd35-fcbb3e75bdbe.png/v1/fill/w_360,h_200,q_80,strp/website_bg_to_try_by_eleiria_dk25b56-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjAwIiwicGF0aCI6IlwvZlwvYjI0Y2IwODEtZjI5Yy00ZTc1LTlmMzYtYWMwMzNlODhiMGM3XC9kazI1YjU2LWU0NmJlMmQ2LTdhNzYtNGEwNy1iZDM1LWZjYmIzZTc1YmRiZS5wbmciLCJ3aWR0aCI6Ijw9MzYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.JRb56fxvzp37ImEm5RqEGChITBOUkdiLurMRzD1I6e8');
+           background-repeat: repeat;
+         }
+       </style>
+     </head>
+     <body class="font-sans">
+       <nav class="bg-gray-900 p-4">
+         <ul class="flex justify-center space-x-6 text-yellow-500">
+           <li><a href="index.html" class="hover:underline">Home</a></li>
+           <li><a href="about.html" class="hover:underline">About</a></li>
+           <li><a href="roster.html" class="hover:underline">Horse Roster</a></li>
+           <li><a href="admin.html" class="hover:underline">Admin</a></li>
+         </ul>
+       </nav>
+       <div class="max-w-3xl mx-auto p-6">
+         <div class="bg-white bg-opacity-80 p-6 rounded-lg shadow-md">
+           <h1 class="text-3xl font-bold text-yellow-600 mb-6">Admin - Manage Horses</h1>
+           <div id="loginForm" class="mb-6">
+             <h2 class="text-xl font-semibold text-yellow-600 mb-2">Login</h2>
+             <div class="mb-4">
+               <label for="username" class="block mb-1 text-gray-800">Username</label>
+               <input id="username" type="text" class="w-full p-2 border rounded bg-white text-gray-800">
+             </div>
+             <div class="mb-4">
+               <label for="password" class="block mb-1 text-gray-800">Password</label>
+               <input id="password" type="password" class="w-full p-2 border rounded bg-white text-gray-800">
+             </div>
+             <button onclick="login()" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700">Login</button>
+           </div>
+           <div id="adminPanel" class="hidden">
+             <h2 class="text-xl font-semibold text-yellow-600 mb-4">Manage Horses</h2>
+             <div class="mb-6">
+               <h3 class="text-lg font-medium text-gray-800 mb-2">Add New Horse</h3>
+               <form id="addHorseForm">
+                 <div class="grid grid-cols-2 gap-4">
+                   <input name="_id" placeholder="_id (e.g., H002)" class="p-2 border rounded" required>
+                   <input name="prefix" placeholder="Prefix" class="p-2 border rounded">
+                   <input name="name" placeholder="Name" class="p-2 border rounded" required>
+                   <select name="sex" class="p-2 border rounded">
+                     <option value="">Select Sex</option>
+                     <option value="Stallion">Stallion</option>
+                     <option value="Mare">Mare</option>
+                     <option value="Gelding">Gelding</option>
+                   </select>
+                   <input name="breed" placeholder="Breed" class="p-2 border rounded">
+                   <input name="color" placeholder="Color" class="p-2 border rounded">
+                   <input name="notes" placeholder="Notes" class="p-2 border rounded">
+                   <input name="sire" placeholder="Sire" class="p-2 border rounded">
+                   <input name="dam" placeholder="Dam" class="p-2 border rounded">
+                   <input name="storyline" placeholder="Storyline" class="p-2 border rounded">
+                   <input name="lifetimeEarnings" placeholder="Lifetime Earnings" class="p-2 border rounded">
+                   <input name="showPlacings" placeholder="Show Placings" class="p-2 border rounded">
+                   <input name="genotype" placeholder="Genotype" class="p-2 border rounded">
+                   <input name="image" placeholder="Image URL" class="p-2 border rounded">
+                   <select name="status" class="p-2 border rounded">
+                     <option value="Active">Active</option>
+                     <option value="Retired">Retired</option>
+                     <option value="Sold">Sold</option>
+                   </select>
+                 </div>
+                 <button type="submit" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 mt-4">Add Horse</button>
+               </form>
+             </div>
+             <h3 class="text-lg font-medium text-gray-800 mb-2">Existing Horses</h3>
+             <div id="horseList" class="space-y-4"></div>
+           </div>
+         </div>
+       </div>
+       <script>
+         async function login() {
+           const username = document.getElementById('username').value;
+           const password = document.getElementById('password').value;
+           const response = await fetch(`${API_BASE_URL}/api/login`, {
+             method: 'POST',
+             headers: { 'Content-Type': 'application/json' },
+             body: JSON.stringify({ username, password })
+           });
+           const data = await response.json();
+           if (data.token) {
+             localStorage.setItem('token', data.token);
+             document.getElementById('loginForm').classList.add('hidden');
+             document.getElementById('adminPanel').classList.remove('hidden');
+             loadHorses();
+           } else {
+             alert('Login failed: ' + data.error);
+           }
+         }
+         
+         async function loadHorses() {
+           const horses = await fetch(`${API_BASE_URL}/api/horses`, {
+             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+           }).then(res => res.json());
+           const horseList = document.getElementById('horseList');
+           horseList.innerHTML = '';
+           horses.forEach(horse => {
+             const div = document.createElement('div');
+             div.className = 'bg-gray-100 p-4 rounded';
+             div.innerHTML = `
+               <p><strong>${horse.prefix ? horse.prefix + ' ' : ''}${horse.name}</strong> (${horse.status})</p>
+               <button onclick="editHorse('${horse._id}')" class="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700 mr-2">Edit</button>
+               <button onclick="deleteHorse('${horse._id}')" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+             `;
+             horseList.appendChild(div);
+           });
+         }
+         
+         async function editHorse(id) {
+           const horse = await fetch(`${API_BASE_URL}/api/horses/${id}`, {
+             headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+           }).then(res => res.json());
+           const form = document.createElement('form');
+           form.innerHTML = `
+             <div class="grid grid-cols-2 gap-4">
+               <input name="_id" value="${horse._id}" class="p-2 border rounded" readonly>
+               <input name="prefix" value="${horse.prefix}" placeholder="Prefix" class="p-2 border rounded">
+               <input name="name" value="${horse.name}" placeholder="Name" class="p-2 border rounded" required>
+               <select name="sex" class="p-2 border rounded">
+                 <option value="">Select Sex</option>
+                 <option value="Stallion" ${horse.sex === 'Stallion' ? 'selected' : ''}>Stallion</option>
+                 <option value="Mare" ${horse.sex === 'Mare' ? 'selected' : ''}>Mare</option>
+                 <option value="Gelding" ${horse.sex === 'Gelding' ? 'selected' : ''}>Gelding</option>
+               </select>
+               <input name="breed" value="${horse.breed}" placeholder="Breed" class="p-2 border rounded">
+               <input name="color" value="${horse.color}" placeholder="Color" class="p-2 border rounded">
+               <input name="notes" value="${horse.notes}" placeholder="Notes" class="p-2 border rounded">
+               <input name="sire" value="${horse.sire}" placeholder="Sire" class="p-2 border rounded">
+               <input name="dam" value="${horse.dam}" placeholder="Dam" class="p-2 border rounded">
+               <input name="storyline" value="${horse.storyline}" placeholder="Storyline" class="p-2 border rounded">
+               <input name="lifetimeEarnings" value="${horse.lifetimeEarnings}" placeholder="Lifetime Earnings" class="p-2 border rounded">
+               <input name="showPlacings" value="${horse.showPlacings}" placeholder="Show Placings" class="p-2 border rounded">
+               <input name="genotype" value="${horse.genotype}" placeholder="Genotype" class="p-2 border rounded">
+               <input name="image" value="${horse.image}" placeholder="Image URL" class="p-2 border rounded">
+               <select name="status" class="p-2 border rounded">
+                 <option value="Active" ${horse.status === 'Active' ? 'selected' : ''}>Active</option>
+                 <option value="Retired" ${horse.status === 'Retired' ? 'selected' : ''}>Retired</option>
+                 <option value="Sold" ${horse.status === 'Sold' ? 'selected' : ''}>Sold</option>
+               </select>
+             </div>
+             <button type="submit" class="bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700 mt-4">Save</button>
+           `;
+           form.onsubmit = async (e) => {
+             e.preventDefault();
+             const formData = new FormData(form);
+             const data = Object.fromEntries(formData);
+             await fetch(`${API_BASE_URL}/api/horses/${id}`, {
+               method: 'PUT',
+               headers: {
+                 'Content-Type': 'application/json',
+                 'Authorization': `Bearer ${localStorage.getItem('token')}`
+               },
+               body: JSON.stringify(data)
+             });
+             loadHorses();
+           };
+           document.getElementById('horseList').prepend(form);
+         }
+         
+         async function deleteHorse(id) {
+           if (confirm('Are you sure you want to delete this horse?')) {
+             await fetch(`${API_BASE_URL}/api/horses/${id}`, {
+               method: 'DELETE',
+               headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+             });
+             loadHorses();
+           }
+         }
+         
+         document.getElementById('addHorseForm').onsubmit = async (e) => {
+           e.preventDefault();
+           const formData = new FormData(e.target);
+           const data = Object.fromEntries(formData);
+           await fetch(`${API_BASE_URL}/api/horses`, {
+             method: 'POST',
+             headers: {
+               'Content-Type': 'application/json',
+               'Authorization': `Bearer ${localStorage.getItem('token')}`
+             },
+             body: JSON.stringify(data)
+           });
+           e.target.reset();
+           loadHorses();
+         };
+         
+         if (localStorage.getItem('token')) {
+           document.getElementById('loginForm').classList.add('hidden');
+           document.getElementById('adminPanel').classList.remove('hidden');
+           loadHorses();
+         }
+       </script>
+     </body>
+     </html>

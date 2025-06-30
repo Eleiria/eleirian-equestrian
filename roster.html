@@ -1,47 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Horse Roster</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="horses.js"></script>
-  <script src="script.js"></script>
-</head>
-<body class="bg-yellow-100 font-sans">
-  <nav class="bg-yellow-500 p-4">
-    <ul class="flex justify-center space-x-6 text-white">
-      <li><a href="index.html" class="hover:underline">Home</a></li>
-      <li><a href="about.html" class="hover:underline">About</a></li>
-      <li><a href="roster.html" class="hover:underline">Horse Roster</a></li>
-    </ul>
-  </nav>
-  <div class="max-w-5xl mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6">Horse Roster</h1>
-    <div class="mb-6">
-      <h2 class="text-xl font-semibold mb-2">Filter by Traits</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div>
-          <label for="sexFilter" class="block mb-1">Sex</label>
-          <select id="sexFilter" onchange="applyFilters()" class="w-full p-2 border rounded">
-            <option value="">All Sexes</option>
-          </select>
-        </div>
-        <div>
-          <label for="breedFilter" class="block mb-1">Breed</label>
-          <select id="breedFilter" onchange="applyFilters()" class="w-full p-2 border rounded">
-            <option value="">All Breeds</option>
-          </select>
-        </div>
-        <div>
-          <label for="colorFilter" class="block mb-1">Color</label>
-          <select id="colorFilter" onchange="applyFilters()" class="w-full p-2 border rounded">
-            <option value="">All Colors</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div id="roster" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
-  </div>
-</body>
-</html>
+     <html lang="en">
+     <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Horse Roster</title>
+       <script src="https://cdn.tailwindcss.com"></script>
+       <script src="script.js"></script>
+       <style>
+         body {
+           background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b24cb081-f29c-4e75-9f36-ac033e88b0c7/dk25b56-e46be2d6-7a76-4a07-bd35-fcbb3e75bdbe.png/v1/fill/w_360,h_200,q_80,strp/website_bg_to_try_by_eleiria_dk25b56-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjAwIiwicGF0aCI6IlwvZlwvYjI0Y2IwODEtZjI5Yy00ZTc1LTlmMzYtYWMwMzNlODhiMGM3XC9kazI1YjU2LWU0NmJlMmQ2LTdhNzYtNGEwNy1iZDM1LWZjYmIzZTc1YmRiZS5wbmciLCJ3aWR0aCI6Ijw9MzYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.JRb56fxvzp37ImEm5RqEGChITBOUkdiLurMRzD1I6e8');
+           background-repeat: repeat;
+         }
+       </style>
+     </head>
+     <body class="font-sans">
+       <nav class="bg-gray-900 p-4">
+         <ul class="flex justify-center space-x-6 text-yellow-500">
+           <li><a href="index.html" class="hover:underline">Home</a></li>
+           <li><a href="about.html" class="hover:underline">About</a></li>
+           <li><a href="roster.html" class="hover:underline">Horse Roster</a></li>
+           <li><a href="admin.html" class="hover:underline">Admin</a></li>
+         </ul>
+       </nav>
+       <div class="max-w-5xl mx-auto p-6">
+         <div class="bg-white bg-opacity-80 p-6 rounded-lg shadow-md">
+           <h1 class="text-3xl font-bold text-yellow-600 mb-6">Horse Roster</h1>
+           <div class="mb-6">
+             <h2 class="text-xl font-semibold text-yellow-600 mb-2">Filter by Traits</h2>
+             <div class="grid grid-cols-4 gap-4">
+               <div>
+                 <label for="sexFilter" class="block mb-1 text-gray-800">Sex</label>
+                 <select id="sexFilter" onchange="applyFilters()" class="w-full p-2 border rounded bg-white text-gray-800">
+                   <option value="">All Sexes</option>
+                 </select>
+               </div>
+               <div>
+                 <label for="breedFilter" class="block mb-1 text-gray-800">Breed</label>
+                 <select id="breedFilter" onchange="applyFilters()" class="w-full p-2 border rounded bg-white text-gray-800">
+                   <option value="">All Breeds</option>
+                 </select>
+               </div>
+               <div>
+                 <label for="colorFilter" class="block mb-1 text-gray-800">Color</label>
+                 <select id="colorFilter" onchange="applyFilters()" class="w-full p-2 border rounded bg-white text-gray-800">
+                   <option value="">All Colors</option>
+                 </select>
+               </div>
+               <div>
+                 <label for="statusFilter" class="block mb-1 text-gray-800">Status</label>
+                 <select id="statusFilter" onchange="applyFilters()" class="w-full p-2 border rounded bg-white text-gray-800">
+                   <option value="">All Statuses</option>
+                   <option value="Active">Active</option>
+                   <option value="Retired">Retired</option>
+                   <option value="Sold">Sold</option>
+                 </select>
+               </div>
+             </div>
+           </div>
+           <div id="roster" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+         </div>
+       </div>
+     </body>
+     </html>

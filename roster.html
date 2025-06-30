@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horse Roster</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="horses.js"></script>
+  <script src="script.js"></script>
+</head>
+<body class="bg-yellow-100 font-sans">
+  <nav class="bg-yellow-500 p-4">
+    <ul class="flex justify-center space-x-6 text-white">
+      <li><a href="index.html" class="hover:underline">Home</a></li>
+      <li><a href="about.html" class="hover:underline">About</a></li>
+      <li><a href="roster.html" class="hover:underline">Horse Roster</a></li>
+    </ul>
+  </nav>
+  <div class="max-w-5xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Horse Roster</h1>
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold mb-2">Filter by Traits</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <label for="sexFilter" class="block mb-1">Sex</label>
+          <select id="sexFilter" onchange="applyFilters()" class="w-full p-2 border rounded">
+            <option value="">All Sexes</option>
+          </select>
+        </div>
+        <div>
+          <label for="breedFilter" class="block mb-1">Breed</label>
+          <select id="breedFilter" onchange="applyFilters()" class="w-full p-2 border rounded">
+            <option value="">All Breeds</option>
+          </select>
+        </div>
+        <div>
+          <label for="colorFilter" class="block mb-1">Color</label>
+          <select id="colorFilter" onchange="applyFilters()" class="w-full p-2 border rounded">
+            <option value="">All Colors</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="roster" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"></div>
+  </div>
+</body>
+</html>

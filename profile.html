@@ -1,43 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Horse Profile</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="horses.js"></script>
-  <script src="script.js"></script>
-</head>
-<body class="bg-yellow-100 font-sans">
-  <nav class="bg-yellow-500 p-4">
-    <ul class="flex justify-center space-x-6 text-white">
-      <li><a href="index.html" class="hover:underline">Home</a></li>
-      <li><a href="about.html" class="hover:underline">About</  </li>
-      <li><a href="roster.html" class="hover:underline">Horse Roster</a></li>
-    </ul>
-  </nav>
-  <div class="max-w-3xl mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6">Horse Profile</h1>
-    <div class="mb-6">
-      <label for="horseSelector" class="block text-lg font-medium mb-2">Select a Horse</label>
-      <select id="horseSelector" onchange="displayHorse()" class="w-full p-2 border rounded">
-        <option value="">Select a Horse</option>
-      </select>
-    </div>
-    <div id="profile" class="bg-white p-6 rounded shadow hidden">
-      <img id="horseImage" src="" alt="Horse Image" class="w-[300px] h-[200px] object-cover mb-4">
-      <p><strong>Name:</strong> <span id="horseName"></span></p>
-      <p><strong>Sex:</strong> <span id="horseSex"></span></p>
-      <p><strong>Breed:</strong> <span id="horseBreed"></span></p>
-      <p><strong>Color:</strong> <span id="horseColor"></span></p>
-      <p><strong>Notes:</strong> <span id="horseNotes"></span></p>
-      <p><strong>Sire:</strong> <a id="horseSire" href="#" onclick="selectRelative('sire')"></a></p>
-      <p><strong>Dam:</strong> <a id="horseDam" href="#" onclick="selectRelative('dam')"></a></p>
-      <p><strong>Storyline:</strong> <span id="horseStoryline"></span></p>
-      <p><strong>Lifetime Earnings:</strong> <span id="horseLifetimeEarnings"></span></p>
-      <p><strong>Show Placings:</strong> <span id="horseShowPlacings"></span></p>
-      <p><strong>Genotype:</strong> <span id="horseGenotype"></span></p>
-    </div>
-  </div>
-</body>
-</html>
+   <html lang="en">
+   <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Horse Profile</title>
+     <script src="https://cdn.tailwindcss.com"></script>
+     <script src="script.js"></script>
+     <style>
+       body {
+         background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b24cb081-f29c-4e75-9f36-ac033e88b0c7/dk25b56-e46be2d6-7a76-4a07-bd35-fcbb3e75bdbe.png/v1/fill/w_360,h_200,q_80,strp/website_bg_to_try_by_eleiria_dk25b56-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjAwIiwicGF0aCI6IlwvZlwvYjI0Y2IwODEtZjI5Yy00ZTc1LTlmMzYtYWMwMzNlODhiMGM3XC9kazI1YjU2LWU0NmJlMmQ2LTdhNzYtNGEwNy1iZDM1LWZjYmIzZTc1YmRiZS5wbmciLCJ3aWR0aCI6Ijw9MzYwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.JRb56fxvzp37ImEm5RqEGChITBOUkdiLurMRzD1I6e8');
+         background-repeat: repeat;
+       }
+     </style>
+   </head>
+   <body class="font-sans">
+     <nav class="bg-gray-900 p-4">
+       <ul class="flex justify-center space-x-6 text-yellow-500">
+         <li><a href="index.html" class="hover:underline">Home</a></li>
+         <li><a href="about.html" class="hover:underline">About</a></li>
+         <li><a href="roster.html" class="hover:underline">Horse Roster</a></li>
+       </ul>
+     </nav>
+     <div class="max-w-3xl mx-auto p-6">
+       <div class="bg-white bg-opacity-80 p-6 rounded-lg shadow-md">
+         <h1 class="text-3xl font-bold text-yellow-600 mb-6">Horse Profile</h1>
+         <div class="mb-6">
+           <label for="horseSelector" class="block text-lg font-medium text-gray-800 mb-2">Select a Horse</label>
+           <select id="horseSelector" onchange="displayHorse()" class="w-full p-2 border rounded bg-white text-gray-800">
+             <option value="">Select a Horse</option>
+           </select>
+         </div>
+         <div id="profile" class="hidden">
+           <img id="horseImage" src="" alt="Horse Image" class="w-[300px] h-[200px] object-cover mb-4">
+           <p class="text-gray-800"><strong>Name:</strong> <span id="horseName"></span></p>
+           <p class="text-gray-800"><strong>Sex:</strong> <span id="horseSex"></span></p>
+           <p class="text-gray-800"><strong>Breed:</strong> <span id="horseBreed"></span></p>
+           <p class="text-gray-800"><strong>Color:</strong> <span id="horseColor"></span></p>
+           <p class="text-gray-800"><strong>Notes:</strong> <span id="horseNotes"></span></p>
+           <p class="text-gray-800"><strong>Sire:</strong> <a id="horseSire" href="#" onclick="selectRelative('sire')" class="text-blue-600 hover:underline"></a></p>
+           <p class="text-gray-800"><strong>Dam:</strong> <a id="horseDam" href="#" onclick="selectRelative('dam')" class="text-blue-600 hover:underline"></a></p>
+           <p class="text-gray-800"><strong>Storyline:</strong> <span id="horseStoryline"></span></p>
+           <p class="text-gray-800"><strong>Lifetime Earnings:</strong> <span id="horseLifetimeEarnings"></span></p>
+           <p class="text-gray-800"><strong>Show Placings:</strong> <span id="horseShowPlacings"></span></p>
+           <p class="text-gray-800"><strong>Genotype:</strong> <span id="horseGenotype"></span></p>
+         </div>
+       </div>
+     </div>
+   </body>
+   </html>

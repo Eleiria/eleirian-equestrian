@@ -1,10 +1,14 @@
-async function populateDropdowns() {
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+       ? 'http://localhost:3000' 
+       : 'https://eleirian-equestrian-backend.onrender.com';
+
+     async function populateDropdowns() {
        const horseSelector = document.getElementById('horseSelector');
        const sexFilter = document.getElementById('sexFilter');
        const breedFilter = document.getElementById('breedFilter');
        const colorFilter = document.getElementById('colorFilter');
        
-       const horses = await fetch('/api/horses').then(res => res.json());
+       const horses = await fetch(`${API_BASE_URL}/api/horses`).then(res => res.json());
        
        if (horseSelector) {
          horses.forEach(horse => {
@@ -58,7 +62,7 @@ async function populateDropdowns() {
          return;
        }
        
-       const horse = await fetch(`/api/horses/${selectedId}`).then(res => res.json());
+       const horse = await fetch(`${API_BASE_URL}/api/horses/${selectedId}`).then(res => res.json());
        if (horse) {
          document.getElementById('horseImage').src = horse.image || 'https://via.placeholder.com/300x200';
          document.getElementById('horseName').textContent = (horse.prefix ? horse.prefix + ' ' : '') + horse.name;
@@ -79,7 +83,7 @@ async function populateDropdowns() {
      }
      
      async function selectRelative(name) {
-       const horses = await fetch(`/api/horses/relatives/${name}`).then(res => res.json());
+       const horses = await fetch(`${API_BASE_URL}/api/horses/relatives/${name}`).then(res => res.json());
        const horse = horses.find(h => h.name === name);
        if (horse) {
          document.getElementById('horseSelector').value = horse._id;
@@ -87,32 +91,35 @@ async function populateDropdowns() {
        }
      }
      
-     async function applyFilters() {
-       const sexFilter = document.getElementById('sexFilter')?.value;
-       const breedFilter = document.getElementById('breedFilter')?.value;
-       const colorFilter = document.getElementById('colorFilter')?.value;
-       const roster = document.getElementById('roster');
-       
-       const query = new URLSearchParams();
-       if (sexFilter) query.append('sex', sexFilter);
-       if (breedFilter) query.append('breed', breedFilter);
-       if (colorFilter) query.append('color', colorFilter);
-       
-       const horses = await fetch(`/api/horses/filter?${query.toString()}`).then(res => res.json());
-       
-       roster.innerHTML = '';
-       horses.forEach(horse => {
-         const card = document.createElement('div');
-         card.className = 'bg-white p-4 rounded shadow text-center';
-         card.innerHTML = `
-           <a href="profile.html?id=${horse._id}">
-             <img src="${horse.image || 'https://via.placeholder.com/300x200'}" alt="${horse.name}" class="w-[300px] h-[200px] object-cover mx-auto mb-2">
-             <h3 class="text-lg font-semibold">${horse.prefix ? horse.prefix + ' ' : ''}${horse.name}</h3>
-           </a>
-         `;
-         roster.appendChild(card);
-       });
-     }
+async function applyFilters() {
+  const sexFilter = document.getElementById('sexFilter')?.value;
+  const breedFilter = document.getElementById('breedFilter')?.value;
+  const colorFilter = document.getElementById('colorFilter')?.value;
+  const statusFilter = document.getElementById('statusFilter')?.value;
+  const roster = document.getElementById('roster');
+  
+  const query = new URLSearchParams();
+  if (sexFilter) query.append('sex', sexFilter);
+  if (breedFilter) query.append('breed', breedFilter);
+  if (colorFilter) query.append('color', colorFilter);
+  if (statusFilter) query.append('status', statusFilter);
+  
+  const horses = await fetch(`${API_BASE_URL}/api/horses/filter?${query.toString()}`).then(res => res.json());
+  
+  roster.innerHTML = '';
+  horses.forEach(horse => {
+    const card = document.createElement('div');
+    card.className = 'bg-white bg-opacity-80 p-4 rounded shadow text-center';
+    card.innerHTML = `
+      <a href="profile.html?id=${horse._id}">
+        <img src="${horse.image || 'https://via.placeholder.com/300x200'}" alt="${horse.name}" class="w-[300px] h-[200px] object-cover mx-auto mb-2">
+        <h3 class="text-lg font-semibold text-yellow-600">${horse.prefix ? horse.prefix + ' ' : ''}${horse.name}</h3>
+      </a>
+    `;
+    roster.appendChild(card);
+  });
+}
+     
      
      window.onload = async function() {
        await populateDropdowns();
